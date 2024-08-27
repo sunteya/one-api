@@ -5,10 +5,17 @@ import (
 	"github.com/songquanpeng/one-api/middleware"
 
 	"github.com/gin-gonic/gin"
+	"strings"
 )
 
-func SetRelayRouter(router *gin.Engine) {
-	router.Use(middleware.CORS())
+func SetRelayRouter(root *gin.Engine) {
+	root.Use(middleware.CORS())
+	router := root.Group("/oapt")
+	router.Use(func(c *gin.Context) {
+		c.Request.URL.Path = strings.TrimPrefix(c.Request.URL.Path, "/oapt")
+		c.Next()
+	})
+
 	// https://platform.openai.com/docs/api-reference/introduction
 	modelsRouter := router.Group("/v1/models")
 	modelsRouter.Use(middleware.TokenAuth())

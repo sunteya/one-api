@@ -18,7 +18,7 @@ root.render(
   <React.StrictMode>
     <StatusProvider>
       <UserProvider>
-        <BrowserRouter>
+        <BrowserRouter basename='/oapt'>
           <Header />
           <Container className={'main-content'}>
             <App />
